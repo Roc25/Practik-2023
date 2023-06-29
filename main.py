@@ -5,6 +5,20 @@ from random import randint
 
 SelectSortBigO = "n^2"
 
+def create_mas():
+    print("Введите последовательность чисел:")
+    list_data = input().split()
+    int_lst = []
+    for element in list_data:
+        if element.isdigit():
+            int_lst.append(int(element))
+        else:
+            print(f'{element} - не является числом ')
+            print('Ошибка формирования списка чисел')
+            menu_main()
+    with open("data.json", "w") as f:
+        json.dump(int_lst, f)
+    menu_main()
 
 def selection_sort(x_list: list):
     for i in range(0, len(x_list) - 1):
@@ -73,7 +87,8 @@ def menu_sort_with_settings(settings: list = [10_000, "data.json"]):
         f"Выполнить сортировку": do_sort,
         f"Изменить количество объектов: {settings[0]} (Текущее значение)": amount_change,
         f"Изменить файл: {settings[1]} (Текущий файл)": file_change,
-        f"Главное меню": menu_main
+        f"Главное меню": menu_main,
+        f"Задать свой массив": create_mas,
     }
 
     option, index = pick([key for key, value in options.items()], title)
