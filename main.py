@@ -5,6 +5,30 @@ from random import randint
 
 SelectSortBigO = "n^2"
 
+def read_data(file_name: str = "data.json"):
+    with open(file_name, "r") as file:
+        data = json.load(file)        
+    return data
+
+def write_data(data: list, file_name: str = "data.json"):
+    with open(file_name, "w") as f:
+        json.dump(data, f)
+
+
+def create_mas():
+    print("Введите последовательность чисел:")
+    list_data = input().split()
+    int_lst = []
+    for element in list_data:
+        if element.isdigit():
+            int_lst.append(int(element))
+        else:
+            print(f'{element} - не является числом ')
+            print('Ошибка формирования списка чисел')
+            menu_main()
+    write_data(int_lst)
+    menu_main()
+
 
 def selection_sort(x_list: list):
     for i in range(0, len(x_list) - 1):
@@ -16,38 +40,40 @@ def selection_sort(x_list: list):
     return x_list
 
 
-def do_sort(amount_items: int = 10_000, file_name: str = "data.json"):
-    create_random_data(amount_items, file_name)
-
-    with open(file_name, "r") as file:
-        data = json.load(file)
-
+def sort_time(data: list):
     start_time = time.time()
     selection_sort(data)
     end_time = time.time()
+    
+    return end_time-start_time
 
-    print(f"Затраченое время: {end_time-start_time} сек.")
+def print_info(time_to_sort, file_name, data):
+    print(f"Затраченое время: {time_to_sort} сек.")
     print(f"Количество элементов в масиве: {len(data)}")
     print(f"Файл с массивом: {file_name}")
 
-    with open(file_name, "r") as file:
-        enter_data = json.load(file)
-        enter_data.sort()
-        print(f"\nПроверка правильности сортировки: {enter_data == data}")
+    enter_data = read_data(file_name)
+    enter_data.sort()
+    print(f"\nПроверка правильности сортировки: {enter_data == data}")
+    
     print(f"Сложность алгоритма по нотации Big O: {SelectSortBigO}")
     input("Для выхода в меню нажмите Enter")
     print("-"*32)
     print("")
     menu_main()
 
+def do_sort(amount_items: int = 10_000, file_name: str = "data.json"):
+    create_random_data(amount_items, file_name)
+    data = read_data(file_name)
+    time_to_sort = sort_time(data)
+    print_info(time_to_sort, file_name, data)
 
 def create_random_data(amount_items: int = 10_000, file_name: str = "data.json"):
     data_list = []
     for i in range(amount_items):
         data_list.append(randint(-10_000, 10_000))
 
-    with open(file_name, "w") as write_file:
-        json.dump(data_list, write_file)
+    write_data(data_list, file_name)
 
 
 def amount_change(settings: list):
@@ -73,7 +99,8 @@ def menu_sort_with_settings(settings: list = [10_000, "data.json"]):
         f"Выполнить сортировку": do_sort,
         f"Изменить количество объектов: {settings[0]} (Текущее значение)": amount_change,
         f"Изменить файл: {settings[1]} (Текущий файл)": file_change,
-        f"Главное меню": menu_main
+        f"Главное меню": menu_main,
+        f"Задать свой массив": create_mas,
     }
 
     option, index = pick([key for key, value in options.items()], title)
