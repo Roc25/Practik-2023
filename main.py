@@ -33,7 +33,7 @@ def create_mas():
 
 def sort_time(data: list):
     start_time = time.time()
-    selection_sort(data)
+    selection_sort(data, len(data))
     end_time = time.time()
     
     return end_time-start_time
