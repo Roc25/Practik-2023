@@ -2,6 +2,7 @@ import time
 import json
 from pick import pick
 from random import randint
+from selection_sort import selection_sort
 
 SelectSortBigO = "n^2"
 
@@ -28,16 +29,6 @@ def create_mas():
             menu_main()
     write_data(int_lst)
     menu_main()
-
-
-def selection_sort(x_list: list):
-    for i in range(0, len(x_list) - 1):
-        smallest = i
-        for j in range(i + 1, len(x_list)):
-            if x_list[j] < x_list[smallest]:
-                smallest = j
-        x_list[i], x_list[smallest] = x_list[smallest], x_list[i]
-    return x_list
 
 
 def sort_time(data: list):
