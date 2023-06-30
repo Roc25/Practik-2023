@@ -6,6 +6,7 @@ from selection_sort import selection_sort
 
 SelectSortBigO = "n^2"
 
+
 def read_data(file_name: str = "data.json"):
     with open(file_name, "r") as file:
         data = json.load(file)        
