@@ -1,3 +1,0 @@
-LIBRARY selection_sort.cp310-win_amd64.pyd
-EXPORTS
-PyInit_selection_sort
