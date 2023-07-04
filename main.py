@@ -4,6 +4,7 @@ from pick import pick
 from random import randint
 from selection_sort import selection_sort
 
+
 SelectSortBigO = "n^2"
 
 
